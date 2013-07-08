@@ -1,0 +1,40 @@
+<% @page_title= "Categories" %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Short Name</th>
+    <th>Description</th>
+  </tr>
+  <% for category in @categories %>
+    <tr>
+      <td><%= category.name %></td>
+      <td><%= (category.short_name) if  category.short_name  %></td>
+      <td><%= category.description %></td>
+<td><%= link_to('Edit', :action => 'index', :id => category) %></td>
+ <td><%= link_to 'Destroy', action:'des' ,id:category, confirm: 'Are you sure?',method: :post %></td>
+
+  <% end %>
+
+<%=form_for(@category) do |f| %>
+<%#(params[:id].blank? ? {:action => :create} : {:action => :update, :id => @category.id})
+ %>
+
+
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Short name</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td><%=f.text_field(:name, :size => 20) %></td>
+      <td><%=f.text_field(:short_name, :size => 20) %></td>
+      <td><%=f.text_field( :description, :size => 40) %></td>
+      <td><%=f.submit%></td>
+    </tr>
+  </table>
+<% end %>
+
+</table>
+

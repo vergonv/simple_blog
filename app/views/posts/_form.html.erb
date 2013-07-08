@@ -1,0 +1,43 @@
+<%= form_for @post do |f| %>
+
+<table>
+  <tr>
+    <th>Title</td>
+    <td><%= f.text_field(:title, :size => 40, :style => "font-size: 1.5em;") %></td>
+    <td rowspan="2">
+      <div class="categorylist">
+        <h2>Categories:</h2>
+        <ul>
+        <%= hidden_field_tag"post[category_ids][]",nil%>
+          <% Category.all.each do |category| -%>
+            <li><%=check_box_tag( "post[category_ids][]", category.id, @post.category_ids.include?(category.id),id:dom_id(category)) %>
+              <%=label_tag dom_id(category) ,category.name %></li>
+          <% end -%>
+        </ul>
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <th>Post Body</th>
+    <td><%= f.text_area(:content, :cols => 70, :rows => 20, :style => "font-size: 1.1em;") %></td>
+  </tr>
+  <tr>
+    <th>Author</th>
+    <td><%= f.select(:author_id, @user_list) %></td>
+  </tr>
+  <tr>
+    <th>Status</th>
+    <td><%= f.select( :status, ['draft', 'published']) %></td>
+  </tr>
+  <tr>
+  <th>Created date</th>
+    <td><%= f.datetime_select(:created_at, :order => [:month, :day, :year],
+          :start_year => 2007, :end_year => Time.now.next_year.year) %></td>
+  </tr>
+    <tr>
+    <th></th>
+    <td> <%= f.submit %></td>
+  </tr>
+
+<% end %>
+</table>
